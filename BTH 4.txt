@@ -1,0 +1,177 @@
+// bai 1- BTH 4
+class MaTran
+{
+    private int m, n;
+    private int[,] a;
+    public MaTran()
+    {
+        m = n = 2;
+        a = new int[m, n];
+    }
+    public MaTran(int m, int n)
+    {
+        this.m = m;
+        this.n = n;
+        a = new int[m, n];
+    }
+    public MaTran(MaTran a1)
+    {
+        this.m = a1.m;
+        this.n = a1.n;
+        this.a = new int[m, n];
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                this.a[i, j] = a1.a[i, j];
+    }
+    public void Nhap()
+    {
+        Console.WriteLine("Nhap thong tin cho cac phan tu cua ma tran");
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+            {
+                Console.Write("a[{0},{1}]=", i, j);
+                a[i, j]= int.Parse(Console.ReadLine());
+            }
+    }
+    public void hien()
+    {
+        Console.WriteLine("cac phan tu cua ma tran la:");
+        for (int i = 0; i < m; ++i) ;
+        {
+            for (int j = 0; j < n; ++j)
+                Console.Write("{0}", a[i, j]);
+            Console.WriteLine();
+        }
+    }
+    public MaTran tong(MaTran a1)
+    {
+        if (this.m == a1.m && this.n == a1.n)
+        {
+            MaTran t = new MaTran(this.m, this.n);
+            for (int i = 0; i < t.m; ++i)
+                for (int j = 0; j < t.n; ++j)
+                    t.a[i, j] = this.a[i, j] + a1.a[i, j];
+            return t;
+
+        }
+        else return null;
+    }
+}
+class cuoi
+{
+    static void Main()
+    {
+        Console.WriteLine("Nhap Thong tin cho ma tran thu nhat");
+        MaTran t1 = new MaTran(4, 5);
+        t1.Nhap();
+        Console.WriteLine("Nhap thong tin cho ma tran thu 2");
+        MaTran t2 = new MaTran(t1);
+        MaTran t3 = t1.tong(t2);
+        if (t3 == null)
+            Console.WriteLine("Hai ma tran co kich thuoc khac nhau khong the tinh tong");
+        else
+        {
+            Console.WriteLine("Thong tin cua ma tran tong");
+            t3.hien();
+        }
+    }
+}
+
+//bai 2-BTH 4
+class NhanVien
+{
+    private string hoten;
+    private string quequan;
+    private double hesoluong;
+    private static int manv = 0;
+    private static int luongcoban = 1050;
+    public NhanVien()
+    {
+        manv++;
+    }
+    public static int Luongcoban
+    {
+        get { return luongcoban; }
+        set
+        {
+            if (value > 1050) luongcoban = value;
+        }
+    }
+    public string Hoten
+    {
+        get
+        {
+            int n = hoten.LastIndexOf(" ");
+            return hoten.Substring(n + 1) + "" + hoten.Substring(0, n);
+        }
+    }
+    public double Hesoluong
+    {
+        get { return hesoluong; }
+    }
+    public void nhap()
+    {
+        Console.Write("Ho ten");
+        hoten = Console.ReadLine();
+        Console.Write("Que quan");
+        quequan = Console.ReadLine();
+        Console.Write("He so luong");
+        hesoluong = double.Parse(Console.ReadLine());
+    }
+    public void Hien()
+    {
+        Console.WriteLine("{0} {1} {2} {3}", manv, hoten, quequan,hesoluong);
+    }
+    public double Luong
+    {
+        get { return hesoluong * luongcoban; }
+    }
+}
+class QLNV
+{
+    private int snv;
+    private NhanVien[] ds;
+    public void Nhap()
+    {
+        Console.Write("nhap so nhan vien");
+        snv = int.Parse(Console.ReadLine());
+        ds = new NhanVien[snv];
+    }
+    public void Hien()
+    {
+        for (int i = 0; i < snv; ++i)
+            ds[i].Hien();
+    }
+    public double MaxHSl()
+    {
+        double max = MaxHSl();
+        for (int i = 0; i < snv; ++i)
+            if (ds[i].Hesoluong == max)
+                ds[i].Hien();
+    }
+    public void Sapxep()
+    {
+        for (int i=0;i<snv-1;++i)
+            for (int j=i+1;j<snv;++j)
+                if(string .Compare(ds[i].Hoten,ds[j].Hoten)>0)
+  		{
+                    NhanVien tg = ds[i];
+                    ds[i] = ds[j];
+                    ds[j] = tg;
+                }
+    }
+}
+class ma
+{
+    static void Main()
+    {
+        QLNV t = new QLNV();
+        t.Nhap();
+        t.Hien();
+        Console.WriteLine("Nhan vien sau khi sap xep");
+        t.Sapxep();
+        t.Hien();
+    }
+}
+    
+
